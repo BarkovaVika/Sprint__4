@@ -2,15 +2,18 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+.gitignore
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
+.idea
 .idea/compiler.xml
 .idea/libraries/
 *.iws
 *.iml
 *.ipr
+Sprint__4/
+.idea/vcs.xml
 
 ### Eclipse ###
 .apt_generated
