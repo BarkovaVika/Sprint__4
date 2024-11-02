@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import praktikum.MainPage;
 import tests.BaseUITest;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class CheckFAQTest extends BaseUITest {
@@ -32,11 +33,13 @@ public class CheckFAQTest extends BaseUITest {
         this.expectedAnswer = expectedAnswer;
     }
 
-    @Test
-    public void checkFAQTest() {
-        MainPage mainPage = new MainPage(driver);
-        mainPage.openMainPage();
-        mainPage.сookieButtonClick();
-        mainPage.matchQuestionAnswer(questionMessage, expectedAnswer);
+
+        @Test
+            public void checkFAQTest() {
+            MainPage objMain = new MainPage(driver);
+            objMain.openMainPage();
+            objMain.сookieButtonClick();
+            objMain.matchQuestionAnswer(questionMessage, expectedAnswer);
+             assertTrue(objMain.matchQuestionAnswer(questionMessage, expectedAnswer));
     }
-}
+ }

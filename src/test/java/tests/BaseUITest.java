@@ -34,5 +34,7 @@ public class BaseUITest {
     public void initFirefox(){
         FirefoxOptions options = new FirefoxOptions();
         driver = new FirefoxDriver(options);
+
+
     }
 }

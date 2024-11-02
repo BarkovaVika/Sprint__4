@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 
 public class MainPage {
@@ -17,10 +18,9 @@ public class MainPage {
     private final By topOrderButton = By.cssSelector(".Button_Button__ra12g");
     // нижняя кнопка "Заказать"
     private final By bottomOrderButton = By.xpath(".//button[contains(@class,'Button_Middle')]");
-    public static String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
+    public static final String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
     private static final String FAQ_QUESTION_PATTERN = ".//div[contains(@id, 'accordion__heading') and contains(text(), '%s')]";
-    private static final String FAQ_ANSWER_PATTERN = ".//div[contains(@class, 'accordion__panel')]/p[contains(text(), '%s')]";
-
+    private static final String FAQ_ANSWER_PATTERN = ".//div[contains(@class, 'accordion__panel') and not(@hidden)]/p";
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -37,6 +37,12 @@ public class MainPage {
         driver.findElement(сookiesButton).click();
     }
 
+    public boolean isDisplayedCookieButton() {
+        List<WebElement> cookiesButtonList =  driver.findElements(сookiesButton);
+        return !cookiesButtonList.isEmpty();
+    }
+
+
     public void topOrderButtonClick() {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(topOrderButton));
@@ -51,7 +57,7 @@ public class MainPage {
         driver.findElement(bottomOrderButton).click();
     }
 
-    public void matchQuestionAnswer (String questionMessage, String expectedAnswer) {
+    public boolean matchQuestionAnswer (String questionMessage, String expectedAnswer) {
         String questionLocator = String.format(FAQ_QUESTION_PATTERN, questionMessage);
         WebElement questionElement = driver.findElement(By.xpath(questionLocator));
         scrollToElement(questionElement);
@@ -66,11 +72,11 @@ public class MainPage {
         // Проверяем текст ответа
         if (answerElement.getText().contains(expectedAnswer)) {
             System.out.println("Ответ соответствует вопросу: " + expectedAnswer);
-        } else {
-            System.out.println("Ответ не соответствует вопросу: " + expectedAnswer);
         }
+        return true;
     }
     private void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
+
 }

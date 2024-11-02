@@ -56,6 +56,6 @@ public class OrderCreationTest extends BaseUITest {
         objOrder.finishOrderButtonClick();
         objOrder.confirmOrderButtonClick();
         boolean isDisplayedOrderSuccess = objOrder.isDisplayedOrderSuccess();
-        Assert.assertFalse("Заказ не подтвержден", isDisplayedOrderSuccess);
+        Assert.assertTrue("Заказ подтвержден", isDisplayedOrderSuccess);
     }
 }

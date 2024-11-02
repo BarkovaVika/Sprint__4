@@ -1,16 +1,20 @@
 package praktikum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Objects;
 
+
 public class OrderPage {
     protected WebDriver driver;
-    public static String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
-    public static String ORDER_PAGE_URL = MAIN_PAGE_URL + "order";
+    public static final String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
+    public static final String ORDER_PAGE_URL = MAIN_PAGE_URL + "order";
+
     //поле ввода имени
     private final By nameInput = By.xpath(".//input[contains(@placeholder, 'Имя')]");
     //поле ввода фамилии
@@ -43,7 +47,7 @@ public class OrderPage {
     // кнопка "Да" в форме подтверждения оформления заказа "Хотите оформить заказ"
     private final By confirmOrderButton = By.xpath(".//button[contains(@class, 'Button_Middle') and contains(text(), 'Да')]");
     // окно с подтверждением оформления заказа с сообщением "Заказ оформлен"
-    private final By orderSuccess = By.xpath(".//div[@class='Order_Overlay__3KW-T']");
+    private final By orderSuccess = By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
 
 
     public OrderPage(WebDriver driver) {
@@ -146,7 +150,13 @@ public class OrderPage {
     public boolean isDisplayedOrderSuccess() {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(orderSuccess));
-        return driver.findElement(orderSuccess).isDisplayed();
+        String orderSuccessText = driver.findElement(By.className("orderSuccess")).getText();
+        WebElement orderSuccessElement = driver.findElement(By.xpath(orderSuccessText));
+        if ((orderSuccessElement).getText().contains("Заказ оформлен")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean isDisplayedOrderContentInput() {
